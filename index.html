@@ -1,74 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
     <title>Document</title>
-</head>
+    <style>
+      .active {
+        border: 1px solid red;
+      }
+      .text-denger {
+        color: red;
+      }
+    </style>
+  </head>
 
-<body>
-
-    <!--// [9] リアルDOMを直接動作 -->
-    <a id="google_link">googleへのリンク</a>
+  <body>
+    <!--リアルDOMでstyleとclassを使用する場合-->
+    <!--タグで直接styleを指定-->
+    <div style="color: blue; font-size: 20px;">styleテスト</div>
+    <!--classでstyleを指定-->
+    <div class="active text-denger">classテスト</div>
+    <br />
 
     <!-- 仮想DOM -->
     <div id="app">
+      <!-- タグや値は、「{{キー}}」で埋め込む -->
+      {{message}}
 
-        <!-- [9] テキスト、タグの埋め込み -->
-        {{ message }}
-        <br />
+      <!-- 属性は、属性の前に「v-bind」をつけ、属性値に直接 「キー」で埋め込む-->
+      <!-- 属性は、直接 「キー」で埋め込む(オブジェクトも可能)-->
+      <div v-bind:style="{fontSize:fontSize}">styleテスト2</div>
 
-        <!-- [9 v-bind]属性の埋め込み -->
-        <a v-bind:href="google">googleへのリンク</a>
-        <a :href="google">googleへのリンク</a>
-        <br />
+      <!-- style属性のように属性として複数の値を指定できる場合は、オブジェクトで渡す -->
+      <!-- このオブジェクトのキーは、自動的にキャメルケースからケバブケースに変換される -->
 
-        <!-- [10 v-bind]属性の埋め込み(オブジェクトを使う場合) -->
-        <a :href="book.url">{{book.title}}</a>
-        <br />
-        
-        <!-- [10 v-bind]属性の埋め込み(オブジェクトを使う場合(複数のタグを一括指定)) -->
-        <input :name="formInput.name" :placeholder="formInput.placeholder" />
-        <input v-bind="{name:formInput.name, placeholder:formInput.placeholder}" />
-        <input v-bind="formInput" />
-        <br />
-        
+      <!-- 属性値に{}をつけて、オブジェクトを作っている -->
+      <!--  {}内の最初のfontSizeは、ここで作ったオブジェクトのキー-->
+      <!--  {}内の2番目のfontSizeは、data()で指定したキー-->
+      <div :style="{fontSize:fontSize}">styleテスト3</div>
+      <div v-bind:style="{'font-size':fontSize}">styleテスト1</div>
     </div>
+
     <script>
-        //　Vueクラス->インスタンス化（実体化）
-        let app = new Vue({
-            el: '#app', // 仮想DOM
-            data() { // dataは仮想DOMの初期設定
-                return {
-                    //　[9]テキスト、タグの埋め込み
-                    message: 'Hello Vue!',
+      //　Vueクラス->インスタンス化（実体化）
+      let app = new Vue({
+        el: "#app", // 仮想DOM
+        data() {
+          // dataは仮想DOMの初期設定
+          return {
+            // MAP型で格納（キー: "バリュー",...）
+            message: "aaa",
+            color: "red",
+            //　[9]テキスト、タグの埋め込み
+            // font-size:'20px'; // ケバブケース
+            fontSize: "30px" // キャメルケース
+          };
+        }
+      });
 
-                    //　[9 v-bind]属性の埋め込み
-                    google: 'http://google.com',
-
-                    //　[10 v-bind]属性の埋め込み(オブジェクトを使う場合)
-                    book: {
-                        title: 'ほんのタイトル',
-                        url: 'http://google.com'
-                    },
-                    
-                    //　[10 v-bind]属性の埋め込み(オブジェクトを使う場合(複数のタグを一括指定))
-                    formInput: {
-                        name: 'your name',
-                        placeholder: '名前を入力する'
-                    }
-                }
-            }
-        });
-
-        // [9] リアルDOMを直接動作
-        // ※IDが変わるとコードの変更が必要
-        // const googleLink = document.getElementById('google_link');
-        // googleLink.href = 'http://google.com';
+      // [9] リアルDOMを直接動作
+      // ※IDが変わるとコードの変更が必要
+      // const googleLink = document.getElementById('google_link');
+      // googleLink.href = 'http://google.com';
     </script>
-</body>
-
+  </body>
 </html>

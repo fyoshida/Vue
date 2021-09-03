@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!--// [9] リアルDOMを直接動作 -->
+    <a id="google_link">googleへのリンク</a>
+
+    <!-- 仮想DOM -->
+    <div id="app">
+      <!-- [9] テキスト、タグの埋め込み -->
+      {{ message }}
+      <br />
+
+      <!-- [9 v-bind]属性の埋め込み -->
+      <a v-bind:href="google">googleへのリンク</a>
+      <a :href="google">googleへのリンク</a>
+      <br />
+
+      <!-- [10 v-bind]属性の埋め込み(オブジェクトを使う場合) -->
+      <a :href="book.url">{{book.title}}</a>
+      <br />
+
+      <!-- [10 v-bind]属性の埋め込み(オブジェクトを使う場合(複数のタグを一括指定)) -->
+      <input :name="formInput.name" :placeholder="formInput.placeholder" />
+      <input
+        v-bind="{name:formInput.name, placeholder:formInput.placeholder}"
+      />
+      <input v-bind="formInput" />
+      <br />
+    </div>
+    <script>
+      //　Vueクラス->インスタンス化（実体化）
+      let app = new Vue({
+        el: "#app", // 仮想DOM
+        data() {
+          // dataは仮想DOMの初期設定
+          return {
+            //　[9]テキスト、タグの埋め込み
+            message: "Hello Vue!",
+
+            //　[9 v-bind]属性の埋め込み
+            google: "http://google.com",
+
+            //　[10 v-bind]属性の埋め込み(オブジェクトを使う場合)
+            book: {
+              title: "ほんのタイトル",
+              url: "http://google.com"
+            },
+
+            //　[10 v-bind]属性の埋め込み(オブジェクトを使う場合(複数のタグを一括指定))
+            formInput: {
+              name: "your name",
+              placeholder: "名前を入力する"
+            }
+          };
+        }
+      });
+
+      // [9] リアルDOMを直接動作
+      // ※IDが変わるとコードの変更が必要
+      // const googleLink = document.getElementById('google_link');
+      // googleLink.href = 'http://google.com';
+    </script>
+  </body>
+</html>
