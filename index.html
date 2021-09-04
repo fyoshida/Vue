@@ -25,13 +25,25 @@
     <br />
 
     <!-- 仮想DOM -->
+
+    <!-- 仮想DOM内の領域-->
+
+    <!-- 仮想DOM内のタグの外:::{{}}で囲んだ領域 -->
+    <!-- 仮想DOM内のタグの中:::属性内 -->
+    <!--・System.out.println() -->
+
     <div id="app">
       <!-- タグや値は、「{{キー}}」で埋め込む -->
       {{message}}
-
+      <a href="font-size">Google</a>
       <!-- 属性は、属性の前に「v-bind」をつけ、属性値に直接 「キー」で埋め込む-->
-      <!-- 属性は、直接 「キー」で埋め込む(オブジェクトも可能)-->
-      <div v-bind:style="{fontSize:fontSize}">styleテスト2</div>
+      <!-- 複数の属性値はオブジェクトで指定する-->
+      <!-- ・オブジェクトのキーは、ケバブケースに変換される -->
+      <!-- ・オブジェクトのバリューは、値に返還される -->
+      <div v-bind:style="{fontSize:fontSize}">
+        styleテスト2
+      </div>
+      <div :class="{active:isActive}">classテスト</div>
 
       <!-- style属性のように属性として複数の値を指定できる場合は、オブジェクトで渡す -->
       <!-- このオブジェクトのキーは、自動的にキャメルケースからケバブケースに変換される -->
@@ -52,10 +64,12 @@
           return {
             // MAP型で格納（キー: "バリュー",...）
             message: "aaa",
+            url: "http://www.google.com",
             color: "red",
             //　[9]テキスト、タグの埋め込み
             // font-size:'20px'; // ケバブケース
-            fontSize: "30px" // キャメルケース
+            fontSize: "30px", // キャメルケース,
+            isActive: true
           };
         }
       });
